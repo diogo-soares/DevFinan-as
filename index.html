@@ -52,7 +52,9 @@
             <h2 class="sr-only">Transaçoes</h2>
 
 
-            <a href="#" class="button new">+ Nova Transação</a>
+            <a href="#" 
+            onclick="Modal.open()"
+            class="button new">+ Nova Transação</a>
 
 
 
@@ -98,7 +100,7 @@
 
     </main>
 
-    <div class="modal-overlay active">
+    <div class="modal-overlay">
         <div class="modal">
             <div id="form">
                 <h2>Nova Transação</h2>
@@ -142,7 +144,9 @@
                     </div>
 
                     <div class="input-group actions">
-                            <a href="#" class="button cancel">Cancelar</a>
+                            <a
+                             onclick="Modal.close()"
+                             href="#" class="button cancel">Cancelar</a>
                             <button>Salvar</button>
                     </div>
 
@@ -151,6 +155,33 @@
             </div>
         </div>
     </div>
+
+    <script>
+ 
+
+    const Modal = {
+          open(){
+            // Abrir Modal
+            // Adicionar a clas active ao modal
+            // Botao (Nova transação)
+            document.querySelector('.modal-overlay')
+            .classList.add('active')
+
+            
+          },
+          close(){
+           // fechar o modal
+           // remover a class active do modal
+           document.querySelector('.modal-overlay')
+           .classList.remove('active')
+
+          }
+     }
+
+
+
+    </script>
+
 
     <footer>
         <p>dev.ficance$</p>
