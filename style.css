@@ -286,6 +286,8 @@ td.expense{
 .modal{
     background: #f0f2f5 ;
     padding: 2.4rem;
+
+    position: relative;
  
    
 
@@ -326,7 +328,7 @@ input{
 }
 
 .input-group.actions .button,
-.input-group.actions button{`
+.input-group.actions button{
     width: 48%;
 }
 
@@ -341,6 +343,9 @@ footer {
     padding: 4rem 0 2rem;
     color: var(--dark-blue);
     opacity: 0.6;
+    display: flex;
+    position: center;
+    justify-content: center;
 }  
 
 
