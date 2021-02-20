@@ -23,19 +23,19 @@ const transactions = [
     {
        id: 1,
        description: 'luz',
-       amount: -50000,
+       amount: 500000,
        date: '23/01/2021',
     }, 
    {
     id: 2,
     description: 'Website',
-    amount: 500000,
+    amount: 80000,
     date: '23/01/2021',
 },
     { 
        id: 3,
        description: 'internet',
-       amount: -20000,
+       amount: 30000,
        date: '23/01/2021',
 },
     { 
@@ -52,13 +52,15 @@ const transactions = [
 const transaction = {
     incomes(){
         // somar as entradas
+        return "cheguei"
 
     },
     expense(){
         //somar as saidas
+        return "aqui"
     },
-    totral(){
-        // entradas - saidas
+    total(){
+        return "Discover"
     }
 }
 
@@ -83,16 +85,28 @@ const DOM = {
 
         const html = `
         <td class="description">${transaction.description}</td>
-        <td class="${CSSclass}">${transaction.amount}</td>
+        <td class="${CSSclass}">${amount}</td>
         <td class="date">${transaction.date}</td>
         <td>
             <img src="./assets/minus.svg" alt="Remover transação">
         </td>
    
         `
-
      return html
 
+     },
+
+     updateBalance(){
+    document
+       .getElementById('incomeDisplay')
+       .innerHTML = transaction.incomes()
+    document
+       .getElementById('expenseDisplay')
+       .innerHTML = transaction.expense()
+
+    document
+       .getElementById('totalDisplay')
+       .innerHTML = transaction.total
 
      }
 
@@ -102,11 +116,27 @@ const Utils = {
    
     formatCurrency(value){
        const signal = Number(value) < 0 ? "-" : ""
+
+       value = String(value).replace(/\D/g, "Discover")
+
+       value = Number(value) / 100
+
+       value = value.toLocaleString("pt-BR", {
+           style: "currency",
+           currency: "BRL"
+
+       })
+
+       return signal + value
     }
- 
 
 } 
+
+
+
 
 transactions.forEach(function(transaction) {
     DOM.addTransaction(transaction)
 })
+
+DOM.updateBalance()
