@@ -19,29 +19,29 @@ const Modal = {
     }
 }
 
-const transactions = [
+const Transactions = [
     {
-       id: 1,
+     
        description: 'luz',
        amount: 500000,
        date: '23/01/2021',
     }, 
    {
-    id: 2,
+  
     description: 'Website',
-    amount: 80000,
+    amount: -80000,
     date: '23/01/2021',
 },
     { 
-       id: 3,
+     
        description: 'internet',
        amount: 30000,
        date: '23/01/2021',
 },
     { 
-        id: 4,
+       
         description: 'APP - React Native',
-        amount: 20000,
+        amount: -20000,
         date: '23/01/2021',
      },
 ]
@@ -50,19 +50,83 @@ const transactions = [
 // somar entradas e saidas, remover das entrafas o valor das saidas,
 // assim terei o total
 const transaction = {
-    incomes(){
-        // somar as entradas
-        return "cheguei"
+    all:
+         [
+        {
+         
+           description: 'luz',
+           amount: 500000,
+           date: '23/01/2021',
+        }, 
+       {
+      
+        description: 'Website',
+        amount: -80000,
+        date: '23/01/2021',
+    },
+        { 
+         
+           description: 'internet',
+           amount: 30000,
+           date: '23/01/2021',
+    },
+        { 
+           
+            description: 'APP - React Native',
+            amount: -20000,
+            date: '23/01/2021',
+         },
+    ],
+
+
+    add(Transaction){
+        transaction.all.push(Transaction) // se der erro Trocar, para transaction
+
+        App.reload()
+
 
     },
-    expense(){
-        //somar as saidas
-        return "aqui"
+  
+    remove(index){
+      transaction.all.splice(index, 1) // se der erro Troca o  nome aqui
+     
+      App.reload()
+         
     },
+
+
+    incomes(){
+        // somar as entradas
+       let income = 0;
+        // pegar todas as transacoes
+        transaction.all.forEach(transaction  => {
+     // para cada transacao, se ela for maior que zero
+       //somar a uma variavel
+       if(transaction.amount > 0 ){
+           income += transaction.amount;
+          }
+       })
+        return income;
+
+    },
+    expense(){  
+
+       let expense = 0;
+       
+       transaction.all.forEach(transaction  => {
+       if(transaction.amount < 0 ){
+          expense += transaction.amount;
+          }
+       })
+        return expense;
+       
+    },
+
     total(){
-        return "Discover"
+        return transaction.incomes() + transaction.expense();
     }
 }
+
 
 //substituir os dados do HTML com os Dados do js
 
@@ -99,16 +163,22 @@ const DOM = {
      updateBalance(){
     document
        .getElementById('incomeDisplay')
-       .innerHTML = transaction.incomes()
+       .innerHTML = Utils.formatCurrency(transaction.incomes())
     document
        .getElementById('expenseDisplay')
-       .innerHTML = transaction.expense()
+       .innerHTML = Utils.formatCurrency(transaction.expense())
 
     document
        .getElementById('totalDisplay')
-       .innerHTML = transaction.total
+       .innerHTML = Utils.formatCurrency(transaction.total())
 
-     }
+     },
+
+
+    clearTransactions(){
+       DOM.transactionsContainer.innerHTML = ""
+
+    }
 
 }
 
@@ -117,7 +187,7 @@ const Utils = {
     formatCurrency(value){
        const signal = Number(value) < 0 ? "-" : ""
 
-       value = String(value).replace(/\D/g, "Discover")
+       value = String(value).replace(/\D/g, "")
 
        value = Number(value) / 100
 
@@ -132,11 +202,64 @@ const Utils = {
 
 } 
 
+const Form = {
+
+   
+
+    formatData(){
+    console.log('Formartar os dados')
+
+    },
+
+    validateFields(){
+       console.log('Validar os campos')
+    },
+    
+    submit(event){
+       event.preventDefault()
+
+       //verificar se toda as informaçoes foram preenchidas
+       Form.validateFields()
+       //formatar os dados para salvar
+
+       //salvar
+       //apagar os dados do dormulario
+       //mofal feche
+       //atualizar a aplicaçao
 
 
 
-transactions.forEach(function(transaction) {
-    DOM.addTransaction(transaction)
-})
 
-DOM.updateBalance()
+    }
+
+
+
+}
+
+
+const App = {
+    init() {
+
+        transaction.all.forEach(transaction => {
+            DOM.addTransaction(transaction)
+        })
+        
+        DOM.updateBalance()
+        
+        
+    },
+    reload() {
+        DOM.clearTransactions()
+        App.init()
+    },
+
+
+}
+
+App.init()
+
+
+transaction.remove(3)
+
+
+
